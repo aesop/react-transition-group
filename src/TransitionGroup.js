@@ -84,7 +84,22 @@ class TransitionGroup extends React.Component {
         return { children }
       })
     }
-  }
+
+    delete this.currentlyTransitioningKeys[key];
+
+    let currentChildMapping = getChildMapping(this.props.children);
+
+    if (currentChildMapping && currentChildMapping.hasOwnProperty(key)) {
+      // This entered again before it fully left. Add it again.
+      this.performEnter(key);
+    } else if (component) {
+      this.setState((state) => {
+        let newChildren = Object.assign({}, state.children);
+        delete newChildren[key];
+        return { children: newChildren };
+      });
+    }
+  };
 
   render() {
     const { component: Component, childFactory, ...props } = this.props
