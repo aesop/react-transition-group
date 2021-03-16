@@ -2,9 +2,7 @@ import chain from 'chain-function';
 import React from 'react';
 import PropTypes from 'prop-types';
 import warning from 'warning';
-
 import { getChildMapping, mergeChildMappings } from './utils/ChildMapping';
-
 
 const propTypes = {
   component: PropTypes.any,
@@ -16,7 +14,6 @@ const defaultProps = {
   component: 'span',
   childFactory: child => child,
 };
-
 
 class TransitionGroup extends React.Component {
   static displayName = 'TransitionGroup';
@@ -31,7 +28,7 @@ class TransitionGroup extends React.Component {
     };
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.currentlyTransitioningKeys = {};
     this.keysToEnter = [];
     this.keysToLeave = [];
@@ -46,7 +43,7 @@ class TransitionGroup extends React.Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     let nextChildMapping = getChildMapping(nextProps.children);
     let prevChildMapping = this.state.children;
 
